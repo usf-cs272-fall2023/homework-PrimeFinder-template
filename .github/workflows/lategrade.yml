@@ -1,0 +1,22 @@
+name: IssueBot
+
+on:
+  issues:
+    types: [opened, reopened]
+
+jobs:
+  main:
+    name: Grade Late Homework
+    runs-on: ubuntu-latest
+
+    env:
+      ERROR_MESSAGE: 'Unknown error'
+
+    steps:
+      - name: Processing late grade request
+        uses: usf-cs272-fall2023/cs272-bot/homework/issues@main
+        with:
+          known_users: ${{ secrets.KNOWN_USERS }}
+          artifact_name: "check-deadline-results"
+          artifact_json: "check-deadline-results.json"
+          workflow_name: "classroom.yml"
